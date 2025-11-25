@@ -1,0 +1,21 @@
+name: WTF
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  create-github-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - run: gh auth status
+        env:
+          GH_DEBUG: api
+          GH_TOKEN: ${{ github.token }}
+      - run: gh release create --repo ${{ github.repository }} v1.0
+        env:
+          GH_DEBUG: api
+          GH_TOKEN: ${{ github.token }}
